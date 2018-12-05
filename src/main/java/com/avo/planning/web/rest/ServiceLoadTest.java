@@ -22,6 +22,7 @@ import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api")
+@SuppressWarnings("Duplicates")
 public class ServiceLoadTest {
 
 
@@ -123,6 +124,9 @@ public class ServiceLoadTest {
         for (int i = 1; i<= Integer.valueOf(value)*10; i++) {
 
 
+            if (i%10 == 0)
+                calCounter++;
+
             JSONObject campObject = new JSONObject();
             campObject.put("name", "Sample Campaign - "+ i);
             campObject.put("createDate","2018-12-03");
@@ -181,6 +185,23 @@ public class ServiceLoadTest {
 
 
             campObject.put("attributes", templAttributesArray);
+
+            // Add Instruments
+
+
+            JSONArray instrArray = new JSONArray();
+
+            for (int j=0;j<=5; j ++) {
+                JSONObject instObject = new JSONObject();
+                instObject.put("name", "Sample Instrument - " + i+" "+j);
+                instObject.put("createDate", "2018-12-03");
+                instObject.put("lastModified", "2018-12-03");
+                instObject.put("startDate", "2018-12-03");
+                instObject.put("endDate", "2019-12-03");
+                instObject.put("description", "Description for Sample Instrument - "+ i +" "+j);
+                instrArray.put(instObject);
+            }
+            campObject.put("instruments", instrArray);
 
             // Add it to the Calendar Array
             campArray.put(campObject);

@@ -184,4 +184,11 @@ public class CalendarResource {
         else
             return ResponseEntity.ok().body(calendarService.findOneByName(name));
     }
+
+    @GetMapping("/calendarsAll")
+    @Timed
+    public ResponseEntity<List<Calendar>> getCalendarCascade( ) {
+
+            return ResponseEntity.ok().body(calendarService.getCalendarWithCascadingObjects());
+    }
 }

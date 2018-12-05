@@ -57,6 +57,8 @@ public interface CalendarService {
 
     Optional<Calendar> getCalendarWithCascadingObjects(String name) ;
 
+    List<Calendar> getCalendarWithCascadingObjects() ;
+
 
 
 
