@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.avo.planning",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "5.7.0",
+    "applicationType": "microservice",
+    "baseName": "planningSvc",
+    "packageName": "com.avo.planning",
+    "packageFolder": "com/avo/planning",
+    "serverPort": "9080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "ZTYzZjRjZjg3NmZmYmY1ODBlOGYxMmVlNTgzYjgxZDcwNTlkODgyMzBmMzU2MGFlOGU0MzYwMTA4ZjhjMTU4NmNiOWYzZjYxNjYwM2NhZTFhOGVlZjU3MGNkMzdkZGFhMDI0YjdlMDdjZmJmZDBiNmE3YmQ4NWYzMDkzZWU4MzQ=",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "otherModules": [],
+    "enableTranslation": true,
+    "clientPackageManager": "npm",
+    "nativeLanguage": "en",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}

@@ -1,0 +1,16 @@
+version: '2'
+services:
+    planningsvc-mongodb:
+        image: mongo:4.0.2
+        ports:
+            - "27017:27017"
+        command: mongos --configdb planningsvc-mongodb-config
+    planningsvc-mongodb-node:
+        build:
+            context: .
+            dockerfile: mongodb/MongoDB.Dockerfile
+        command: mongod --replSet rs1 --noprealloc --smallfiles
+    planningsvc-mongodb-config:
+        image: mongo:4.0.2
+        container_name: planningsvc-mongodb-config
+        command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db
