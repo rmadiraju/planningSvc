@@ -3,19 +3,20 @@ package com.avo.planning.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Persist AuditEvent managed by the Spring Boot actuator.
  *
  * @see org.springframework.boot.actuate.audit.AuditEvent
  */
-@Document(collection = "jhi_persistent_audit_event")
+@Document(collection = "avoPlanning")
 public class PersistentAuditEvent implements Serializable {
 
     private static final long serialVersionUID = 1L;

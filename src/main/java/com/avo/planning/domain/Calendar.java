@@ -1,20 +1,19 @@
 package com.avo.planning.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * A Calendar.
@@ -47,6 +46,19 @@ public class Calendar implements Serializable {
 
     @Field("colour")
     private String colour;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Field("end_date")
+    private LocalDate endDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Field("start_date")
+    private LocalDate startDate;
+
+    @Field("active")
+    private Boolean active;
 
     @DBRef
     @Field("sourceTemplate")
@@ -176,7 +188,7 @@ public class Calendar implements Serializable {
     }
 
     public Set<Campaign> getCampaigns() {
-        if (campaigns == null )
+        if (campaigns == null)
             campaigns = new HashSet<>();
         return campaigns;
     }
@@ -218,6 +230,32 @@ public class Calendar implements Serializable {
         this.colour = colour;
     }
 
+
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
@@ -233,9 +271,13 @@ public class Calendar implements Serializable {
             .add("lastModified=" + lastModified)
             .add("icon='" + icon + "'")
             .add("colour='" + colour + "'")
+            .add("startDate=" + startDate)
+            .add("endDate=" + endDate)
+            .add("active=" + active)
             .add("sourceTemplate=" + sourceTemplate)
             .add("attributes=" + attributes)
             .add("calendarType=" + calendarType)
+            .add("campaigns=" + campaigns)
             .toString();
     }
 }
