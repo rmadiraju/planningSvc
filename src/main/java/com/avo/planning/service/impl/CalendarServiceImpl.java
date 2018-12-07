@@ -65,7 +65,7 @@ public class CalendarServiceImpl extends AbstractServiceImpl implements Calendar
     @Override
     public Page<Calendar> findAll(Pageable pageable) {
         log.debug("Request to get all Calendars");
-        pageable = new PageRequest(0, Integer.MAX_VALUE);
+        //pageable = new PageRequest(0, Integer.MAX_VALUE);
         return calendarRepository.findAll(pageable);
     }
 

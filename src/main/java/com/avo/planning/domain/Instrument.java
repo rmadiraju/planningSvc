@@ -62,6 +62,11 @@ public class Instrument implements Serializable {
     @JsonIgnoreProperties("instruments")
     private Campaign campaign;
 
+    @DBRef
+    @Field("instrumentType")
+    @JsonIgnoreProperties("")
+    private InstrumentType instrumentType;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
         return id;
@@ -199,6 +204,19 @@ public class Instrument implements Serializable {
 
     public void setCampaign(Campaign campaign) {
         this.campaign = campaign;
+    }
+
+    public InstrumentType getInstrumentType() {
+        return instrumentType;
+    }
+
+    public Instrument instrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
+        return this;
+    }
+
+    public void setInstrumentType(InstrumentType instrumentType) {
+        this.instrumentType = instrumentType;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
