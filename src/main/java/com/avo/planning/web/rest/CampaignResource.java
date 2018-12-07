@@ -141,4 +141,14 @@ public class CampaignResource {
 
         return "Done";
     }
+
+    @GetMapping("/campaigns/{name}")
+    @Timed
+    public ResponseEntity<Campaign> getCampaignTemplate(@PathVariable String name) {
+        log.debug("REST request to get Campaign Template : {}", name);
+        Optional<Campaign> campaign = campaignService.findByName(name);
+        return ResponseUtil.wrapOrNotFound(campaign);
+    }
+
+
 }

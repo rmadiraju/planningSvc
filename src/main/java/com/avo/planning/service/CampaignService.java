@@ -54,4 +54,6 @@ public interface CampaignService {
 
     List<Campaign> findCampaignsByCalendar(String calendar);
 
+    Optional<Campaign> findByName(String name) ;
+
 }

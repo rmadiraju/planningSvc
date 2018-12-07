@@ -1,9 +1,11 @@
 package com.avo.planning.service;
 
 import com.avo.planning.domain.Template;
+import com.avo.planning.domain.enumeration.TemplateTypeEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,4 +44,6 @@ public interface TemplateService {
      * @param id the id of the entity
      */
     void delete(String id);
+
+    List<Template> findTemplatesByType(TemplateTypeEnum type);
 }

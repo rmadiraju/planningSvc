@@ -104,5 +104,10 @@ public class CampaignServiceImpl extends AbstractServiceImpl implements Campaign
         return campaigns.get();
     }
 
+    @Override
+    public Optional<Campaign> findByName(String name) {
+        log.debug("Request to get Campaign by Name : {}", name);
+        return campaignRepository.findByName(name);
+    }
 
 }

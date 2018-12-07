@@ -51,6 +51,7 @@ public class CalendarServiceImpl extends AbstractServiceImpl implements Calendar
         Optional <Calendar> cal = calendarService.findOneByName(calendar.getName());
         if (cal.isPresent())
             calendar.setId(cal.get().getId());
+
         //calendar.getCampaigns().forEach(c -> campaignService.save(c));
         return calendarRepository.save(calendar);
     }
