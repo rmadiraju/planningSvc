@@ -126,7 +126,14 @@ public class CalendarServiceImpl extends AbstractServiceImpl implements Calendar
         }else {
             return Optional.empty();
         }
+    }
 
+    @Override
+    public List<Calendar> getCalendarWithCascadingObjects() {
+
+        List<Calendar> calendars = calendarRepository.findAll();
+        calendars.forEach(calendar -> calendar.getCampaigns().addAll(campaignService.findCampaignsByCalendar(calendar.getName())));
+        return calendars;
 
     }
 }
