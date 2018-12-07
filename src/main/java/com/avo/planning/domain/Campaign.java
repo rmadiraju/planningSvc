@@ -62,6 +62,14 @@ public class Campaign implements Serializable {
     @Field("sourceTemplate")
     private Template sourceTemplate;
 
+    @NotNull
+    @Field("is_active")
+    private Boolean isActive;
+
+    @NotNull
+    @Field("is_template")
+    private Boolean isTemplate;
+
     @DBRef
     @Field("attribute")
     private Set<Attribute> attributes = new HashSet<>();
@@ -78,6 +86,8 @@ public class Campaign implements Serializable {
     @Field("calendar")
     @JsonIgnoreProperties("campaigns")
     private String calendar;
+
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
@@ -251,6 +261,22 @@ public class Campaign implements Serializable {
     public Campaign calendar(String calendar) {
         this.calendar = calendar;
         return this;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Boolean getTemplate() {
+        return isTemplate;
+    }
+
+    public void setTemplate(Boolean template) {
+        isTemplate = template;
     }
 
     public void setCalendar(String calendar) {

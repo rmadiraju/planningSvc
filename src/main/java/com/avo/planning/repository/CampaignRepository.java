@@ -16,5 +16,6 @@ import java.util.Optional;
 public interface CampaignRepository extends MongoRepository<Campaign, String> {
     Campaign findFirstByName(String name);
     Optional<List<Campaign>> findCampaignsByCalendar(String name);
+    Optional<Campaign> findByName(String name);
 
 }

@@ -1,6 +1,7 @@
 package com.avo.planning.service.impl;
 
 import com.avo.planning.domain.Template;
+import com.avo.planning.domain.enumeration.TemplateTypeEnum;
 import com.avo.planning.repository.AttributeRepository;
 import com.avo.planning.repository.TemplateRepository;
 import com.avo.planning.service.TemplateService;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -78,5 +80,10 @@ public class TemplateServiceImpl extends AbstractServiceImpl implements Template
     public void delete(String id) {
         log.debug("Request to delete Template : {}", id);
         templateRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Template> findTemplatesByType(TemplateTypeEnum type) {
+        return templateRepository.findByType(type);
     }
 }

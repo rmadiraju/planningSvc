@@ -51,6 +51,7 @@ public class CalendarServiceImpl extends AbstractServiceImpl implements Calendar
         Optional <Calendar> cal = calendarService.findOneByName(calendar.getName());
         if (cal.isPresent())
             calendar.setId(cal.get().getId());
+
         //calendar.getCampaigns().forEach(c -> campaignService.save(c));
         return calendarRepository.save(calendar);
     }
@@ -125,7 +126,14 @@ public class CalendarServiceImpl extends AbstractServiceImpl implements Calendar
         }else {
             return Optional.empty();
         }
+    }
 
+    @Override
+    public List<Calendar> getCalendarWithCascadingObjects() {
+
+        List<Calendar> calendars = calendarRepository.findAll();
+        calendars.forEach(calendar -> calendar.getCampaigns().addAll(campaignService.findCampaignsByCalendar(calendar.getName())));
+        return calendars;
 
     }
 

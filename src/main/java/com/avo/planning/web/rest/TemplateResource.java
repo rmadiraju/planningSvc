@@ -1,5 +1,6 @@
 package com.avo.planning.web.rest;
 
+import com.avo.planning.domain.enumeration.TemplateTypeEnum;
 import com.codahale.metrics.annotation.Timed;
 import com.avo.planning.domain.Template;
 import com.avo.planning.service.TemplateService;
@@ -49,9 +50,7 @@ public class TemplateResource {
     @Timed
     public ResponseEntity<Template> createTemplate(@Valid @RequestBody Template template) throws URISyntaxException {
         log.debug("REST request to save Template : {}", template);
-        if (template.getId() != null) {
-            throw new BadRequestAlertException("A new template cannot already have an ID", ENTITY_NAME, "idexists");
-        }
+
         Template result = templateService.save(template);
         return ResponseEntity.created(new URI("/api/templates/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -122,4 +121,15 @@ public class TemplateResource {
         templateService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
+
+    @GetMapping("/getTemplatesByType/{type}")
+    @Timed
+    public ResponseEntity<List<Template>> getAllTemplatesByType(@PathVariable TemplateTypeEnum type) {
+        log.debug("REST request to get a page of Templates by Type {}", type);
+        List<Template> templates = templateService.findTemplatesByType(type);
+
+        return ResponseEntity.ok().body(templates);
+    }
+
+
 }
