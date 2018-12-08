@@ -24,6 +24,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Instrument.
@@ -132,11 +133,13 @@ public class InstrumentResource {
 
     @GetMapping("/getInstrumentsTypes")
     @Timed
-    public ResponseEntity<List<InstrumentType>> getInstrumentType(Pageable pageable) {
+    public ResponseEntity<List<String>> getInstrumentTypes(Pageable pageable) {
         log.debug("REST request to get Instrument Types ");
         Page<InstrumentType> page = instrumentTypeService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/getInstrumentsTypes");
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        List<String> instList =  page.getContent().stream().map(instrumentType -> instrumentType.getName()).collect(Collectors.toList());
+        return ResponseEntity.ok().body(instList);
 
     }
+
+
 }
