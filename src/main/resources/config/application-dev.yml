@@ -45,6 +45,8 @@ spring:
         mongodb:
             uri: mongodb://localhost:27017
             database: planningSvc
+    autoconfigure:
+        exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
     mail:
         host: localhost
         port: 25

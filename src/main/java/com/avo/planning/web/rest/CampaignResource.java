@@ -144,11 +144,10 @@ public class CampaignResource {
 
     @GetMapping("/campaigns/{name}")
     @Timed
-    public ResponseEntity<Campaign> getCampaignTemplate(@PathVariable String name) {
-        log.debug("REST request to get Campaign Template : {}", name);
+    public ResponseEntity<Campaign> getCampaignByName(@PathVariable String name) {
+        log.debug("REST request to get Campaign By Name : {}", name);
         Optional<Campaign> campaign = campaignService.findByName(name);
         return ResponseUtil.wrapOrNotFound(campaign);
     }
-
 
 }

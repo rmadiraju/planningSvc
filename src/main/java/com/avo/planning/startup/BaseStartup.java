@@ -3,8 +3,8 @@ package com.avo.planning.startup;
 import com.avo.planning.domain.Calendar;
 import com.avo.planning.domain.CalendarType;
 import com.avo.planning.domain.enumeration.CalendarScopeEnum;
-import com.avo.planning.repository.CalendarRepository;
-import com.avo.planning.repository.CalendarTypeRepository;
+import com.avo.planning.repository.*;
+import com.avo.planning.service.CampaignTypeService;
 import com.avo.planning.util.HTMLUtils;
 import org.joda.time.Instant;
 import org.slf4j.Logger;
@@ -29,7 +29,17 @@ public abstract class BaseStartup {
     @Autowired
     protected CalendarTypeRepository calendarTypeRepository;
 
+    @Autowired
+    protected CampaignRepository campaignRepository;
 
+    @Autowired
+    protected CampaignTypeRepository campaignTypeRepository;
+
+    @Autowired
+    protected InstrumentRepository instrumentRepository;
+
+    @Autowired
+    protected InstrumentTypeRepository instrumentTypeRepository;
 
 
 

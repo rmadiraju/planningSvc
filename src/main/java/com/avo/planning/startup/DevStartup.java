@@ -1,8 +1,9 @@
 package com.avo.planning.startup;
 
-import com.avo.planning.domain.Calendar;
-import com.avo.planning.domain.CalendarType;
+import com.avo.planning.domain.*;
 import com.avo.planning.domain.enumeration.CalendarScopeEnum;
+import com.avo.planning.domain.enumeration.CampaignTypeEnum;
+import com.avo.planning.domain.enumeration.InstrumentTypeEnum;
 import com.avo.planning.repository.CalendarRepository;
 import com.avo.planning.repository.CalendarTypeRepository;
 import com.avo.planning.util.HTMLUtils;
@@ -39,6 +40,15 @@ public class DevStartup extends BaseStartup {
         log.debug("Clearing all calendars...");
         calendarTypeRepository.deleteAll();
         calendarRepository.deleteAll();
+
+        // Delete campaigns and Instruments
+        campaignTypeRepository.deleteAll();
+        campaignRepository.deleteAll();
+
+        instrumentTypeRepository.deleteAll();
+        instrumentRepository.deleteAll();
+
+
     }
 
     public void createBaseData() {
@@ -49,6 +59,40 @@ public class DevStartup extends BaseStartup {
             calendarType.setName("BaseCalendarType");
             calendarType.scope(CalendarScopeEnum.GLOBAL);
             calendarTypeRepository.save(calendarType);
+        }
+
+        if (campaignRepository.findAll().isEmpty()) {
+            log.info("Adding test Campaign types");
+            CampaignType campaignType = new CampaignType();
+            campaignType.setName("Weekly Campaign");
+            campaignType.setRecurring(true);
+            campaignType.setType(CampaignTypeEnum.WEEKLY);
+            campaignTypeRepository.save(campaignType);
+
+            CampaignType campaignType2 = new CampaignType();
+            campaignType2.setName("Seasonal Campaign");
+            campaignType2.setRecurring(false);
+            campaignType2.setType(CampaignTypeEnum.SEASONAL);
+            campaignTypeRepository.save(campaignType2);
+
+            CampaignType campaignType3 = new CampaignType();
+            campaignType3.setName("Yearly Campaign");
+            campaignType3.setRecurring(false);
+            campaignType3.setType(CampaignTypeEnum.YEARLY);
+            campaignTypeRepository.save(campaignType3);
+        }
+
+        if (instrumentRepository.findAll().isEmpty()){
+            log.info("Adding Instrument Types");
+            InstrumentType instrumentType = new InstrumentType();
+            instrumentType.setName("Flyer");
+            instrumentType.setType(InstrumentTypeEnum.FLYER);
+            instrumentTypeRepository.save(instrumentType);
+
+            InstrumentType instrumentType2 = new InstrumentType();
+            instrumentType2.setName("Email");
+            instrumentType2.setType(InstrumentTypeEnum.EMAIL);
+            instrumentTypeRepository.save(instrumentType2);
         }
 
         CalendarType calendarType = calendarTypeRepository.findAll().get(0);
@@ -70,6 +114,38 @@ public class DevStartup extends BaseStartup {
                     calendar.setEndDate(LocalDate.now().plus(10 + i, ChronoUnit.DAYS));
                 }
                 calendarList.add(calendar);
+                List<Campaign> campaignList = new ArrayList<>();
+                log.info("Adding test Campaigns for Calendar {}", i);
+                for (int j=0; j < 3; j++){
+                    Campaign campaign = new Campaign();
+                    campaign.setName("Campaign "+ i+"-"+j);
+                    campaign.setCampaignType(campaignTypeRepository.findAll().get(j));
+                    campaign.setActive(true);
+                    campaign.setDescription("Test Campaign "+j);
+                    campaign.setCreateDate(LocalDate.now());
+                    campaign.setCalendar(calendar.getName());
+                    campaign.setStartDate(LocalDate.now().plusDays(10));
+                    campaign.setEndDate(campaign.getStartDate().plusDays(7));
+                    campaign.setActive(true);
+                    campaign.setTemplate(false);
+                    campaignList.add(campaign);
+                    log.info("Adding test Instruments for Campaign {} ", j);
+                    List<Instrument> instrumentList = new ArrayList<>();
+                    for (int k = 0; k < 2; k++){
+                        Instrument instrument = new Instrument();
+                        instrument.setName("Instrument "+ i+"-"+j+"-"+k);
+                        instrument.setInstrumentType(instrumentTypeRepository.findAll().get(k));
+                        instrument.setCreateDate(LocalDate.now());
+                        instrument.setStartDate(LocalDate.now().plusDays(10));
+                        instrument.setEndDate(LocalDate.now().plusDays(17));
+                        instrumentList.add(instrument);
+                    }
+                    instrumentRepository.saveAll(instrumentList);
+                    campaign.getInstruments().addAll(instrumentList);
+                    campaign.getInstruments().forEach(inst->  inst.setId(instrumentRepository.findFirstByName(inst.getName()).getId()));
+                }
+
+                campaignRepository.saveAll(campaignList);
 
             }
             calendarRepository.saveAll(calendarList);
