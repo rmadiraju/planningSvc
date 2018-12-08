@@ -1,5 +1,8 @@
 package com.avo.planning.web.rest;
 
+import com.avo.planning.domain.InstrumentType;
+import com.avo.planning.service.CampaignService;
+import com.avo.planning.service.InstrumentTypeService;
 import com.codahale.metrics.annotation.Timed;
 import com.avo.planning.domain.Instrument;
 import com.avo.planning.service.InstrumentService;
@@ -9,6 +12,7 @@ import com.avo.planning.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +37,9 @@ public class InstrumentResource {
     private static final String ENTITY_NAME = "avotestInstrument";
 
     private final InstrumentService instrumentService;
+
+    @Autowired
+    private InstrumentTypeService instrumentTypeService;
 
     public InstrumentResource(InstrumentService instrumentService) {
         this.instrumentService = instrumentService;
@@ -121,5 +128,15 @@ public class InstrumentResource {
         log.debug("REST request to delete Instrument : {}", id);
         instrumentService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
+    }
+
+    @GetMapping("/getInstrumentsTypes")
+    @Timed
+    public ResponseEntity<List<InstrumentType>> getInstrumentType(Pageable pageable) {
+        log.debug("REST request to get Instrument Types ");
+        Page<InstrumentType> page = instrumentTypeService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/getInstrumentsTypes");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+
     }
 }

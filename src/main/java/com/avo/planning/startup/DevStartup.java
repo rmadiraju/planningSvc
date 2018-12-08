@@ -93,7 +93,18 @@ public class DevStartup extends BaseStartup {
             instrumentType2.setName("Email");
             instrumentType2.setType(InstrumentTypeEnum.EMAIL);
             instrumentTypeRepository.save(instrumentType2);
+
+            InstrumentType instrumentType3 = new InstrumentType();
+            instrumentType3.setName("Coupon");
+            instrumentType3.setType(InstrumentTypeEnum.COUPON);
+            instrumentTypeRepository.save(instrumentType3);
+
+            InstrumentType instrumentType4 = new InstrumentType();
+            instrumentType4.setName("Email");
+            instrumentType4.setType(InstrumentTypeEnum.WEB);
+            instrumentTypeRepository.save(instrumentType2);
         }
+
 
         CalendarType calendarType = calendarTypeRepository.findAll().get(0);
 
