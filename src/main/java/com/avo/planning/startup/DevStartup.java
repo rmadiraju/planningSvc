@@ -100,9 +100,9 @@ public class DevStartup extends BaseStartup {
             instrumentTypeRepository.save(instrumentType3);
 
             InstrumentType instrumentType4 = new InstrumentType();
-            instrumentType4.setName("Email");
+            instrumentType4.setName("Web");
             instrumentType4.setType(InstrumentTypeEnum.WEB);
-            instrumentTypeRepository.save(instrumentType2);
+            instrumentTypeRepository.save(instrumentType4);
         }
 
 
