@@ -3,6 +3,7 @@ package com.avo.planning.startup;
 import com.avo.planning.domain.*;
 import com.avo.planning.domain.enumeration.CalendarScopeEnum;
 import com.avo.planning.domain.enumeration.CampaignTypeEnum;
+import com.avo.planning.domain.enumeration.DeadlineTypeEnum;
 import com.avo.planning.domain.enumeration.InstrumentTypeEnum;
 import com.avo.planning.repository.CalendarRepository;
 import com.avo.planning.repository.CalendarTypeRepository;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.PostConstruct;
@@ -47,6 +49,9 @@ public class DevStartup extends BaseStartup {
 
         instrumentTypeRepository.deleteAll();
         instrumentRepository.deleteAll();
+
+        deadlineRepository.deleteAll();
+        deadlineRepository.deleteAll();
 
 
     }
@@ -85,26 +90,42 @@ public class DevStartup extends BaseStartup {
         if (instrumentRepository.findAll().isEmpty()){
             log.info("Adding Instrument Types");
             InstrumentType instrumentType = new InstrumentType();
-            instrumentType.setName("Flyer");
+            instrumentType.setName("flyer");
             instrumentType.setType(InstrumentTypeEnum.FLYER);
             instrumentTypeRepository.save(instrumentType);
 
             InstrumentType instrumentType2 = new InstrumentType();
-            instrumentType2.setName("Email");
+            instrumentType2.setName("email");
             instrumentType2.setType(InstrumentTypeEnum.EMAIL);
             instrumentTypeRepository.save(instrumentType2);
 
             InstrumentType instrumentType3 = new InstrumentType();
-            instrumentType3.setName("Coupon");
+            instrumentType3.setName("coupon");
             instrumentType3.setType(InstrumentTypeEnum.COUPON);
             instrumentTypeRepository.save(instrumentType3);
 
             InstrumentType instrumentType4 = new InstrumentType();
-            instrumentType4.setName("Web");
+            instrumentType4.setName("web");
             instrumentType4.setType(InstrumentTypeEnum.WEB);
             instrumentTypeRepository.save(instrumentType4);
         }
 
+        if (deadlineTypeRepository.findAll().isEmpty()) {
+            DeadlineType deadlineType = new DeadlineType();
+            deadlineType.setName("Offer Deadline");
+            deadlineType.setType(DeadlineTypeEnum.OFFER);
+            deadlineTypeRepository.save(deadlineType);
+            DeadlineType deadlineType2 = new DeadlineType();
+            deadlineType2.setName("Space Allocation");
+            deadlineType2.setType(DeadlineTypeEnum.SPACEALLOCATION);
+            deadlineTypeRepository.save(deadlineType2);
+            DeadlineType deadlineType3 = new DeadlineType();
+            deadlineType3.setName("Assign Targets");
+            deadlineType3.setType(DeadlineTypeEnum.ASSIGNTARGETS);
+            deadlineTypeRepository.save(deadlineType3);
+
+
+        }
 
         CalendarType calendarType = calendarTypeRepository.findAll().get(0);
 

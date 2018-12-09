@@ -41,6 +41,12 @@ public abstract class BaseStartup {
     @Autowired
     protected InstrumentTypeRepository instrumentTypeRepository;
 
+    @Autowired
+    protected DeadlineRepository deadlineRepository;
+
+    @Autowired
+    protected DeadlineTypeRepository deadlineTypeRepository;
+
 
 
     public BaseStartup() {

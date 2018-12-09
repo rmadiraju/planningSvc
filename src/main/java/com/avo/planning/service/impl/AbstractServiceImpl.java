@@ -28,4 +28,10 @@ public abstract class AbstractServiceImpl {
 
     @Autowired
     protected InstrumentTypeService instrumentTypeService;
+
+    @Autowired
+    protected DeadlineTypeService deadlineTypeService;
+
+    @Autowired
+    protected DeadlineService deadlineService;
 }
