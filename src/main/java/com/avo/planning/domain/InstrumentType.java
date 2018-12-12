@@ -24,6 +24,7 @@ public class InstrumentType implements Serializable {
     @Field("name")
     private String name;
 
+
     @NotNull
     @Field("type")
     private InstrumentTypeEnum type;

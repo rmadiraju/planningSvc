@@ -117,6 +117,22 @@ public class CalendarResource {
     }
 
     /**
+     * GET /activeCalendars/date
+     * @param pageable
+     * @param date
+     * @return
+     */
+    @GetMapping("/activeCalendars/{date}")
+    @Timed
+    public ResponseEntity<List<Calendar>> getActiveCalendars(Pageable pageable, @PathVariable(value = "date", required = false) String date) {
+        log.debug("REST request to get a page of Calendars for given date");
+        Page<Calendar> page = calendarService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/calendars");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+
+    /**
      * GET  /calendars/:id : get the "id" calendar.
      *
      * @param id the id of the calendar to retrieve

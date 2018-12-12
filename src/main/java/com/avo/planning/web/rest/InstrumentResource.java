@@ -142,5 +142,16 @@ public class InstrumentResource {
 
     }
 
+    @GetMapping("/getInstrumentsTypesWithDetail")
+    @Timed
+    public ResponseEntity<List<InstrumentType>> getInstrumentsTypesWithDetail(Pageable pageable) {
+        log.debug("REST request to get Instrument Types ");
+        Page<InstrumentType> page = instrumentTypeService.findAll(pageable);
+
+        return ResponseEntity.ok().body(page.getContent());
+
+    }
+
+
 
 }
