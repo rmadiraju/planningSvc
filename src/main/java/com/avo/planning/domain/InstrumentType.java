@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * A InstrumentType.
@@ -24,6 +25,8 @@ public class InstrumentType implements Serializable {
     @Field("name")
     private String name;
 
+    @Field
+    private String icon;
 
     @NotNull
     @Field("type")
@@ -144,6 +147,18 @@ public class InstrumentType implements Serializable {
         return Objects.equals(getId(), instrumentType.getId());
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public Boolean getRecurring() {
+        return recurring;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
@@ -151,14 +166,15 @@ public class InstrumentType implements Serializable {
 
     @Override
     public String toString() {
-        return "InstrumentType{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", type='" + getType() + "'" +
-            ", recurring='" + isRecurring() + "'" +
-            ", dayOfMonth=" + getDayOfMonth() +
-            ", dayOfWeek=" + getDayOfWeek() +
-            ", month=" + getMonth() +
-            "}";
+        return new StringJoiner(", ", InstrumentType.class.getSimpleName() + "[", "]")
+            .add("id='" + id + "'")
+            .add("name='" + name + "'")
+            .add("icon='" + icon + "'")
+            .add("type=" + type)
+            .add("recurring=" + recurring)
+            .add("dayOfMonth=" + dayOfMonth)
+            .add("dayOfWeek=" + dayOfWeek)
+            .add("month=" + month)
+            .toString();
     }
 }
