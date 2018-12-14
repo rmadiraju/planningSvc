@@ -113,16 +113,27 @@ public class DevStartup extends BaseStartup {
         if (deadlineTypeRepository.findAll().isEmpty()) {
             DeadlineType deadlineType = new DeadlineType();
             deadlineType.setName("Offer Deadline");
+            deadlineType.setDescription(" Details about Offer Deadline");
             deadlineType.setType(DeadlineTypeEnum.OFFER);
             deadlineTypeRepository.save(deadlineType);
+
             DeadlineType deadlineType2 = new DeadlineType();
             deadlineType2.setName("Space Allocation");
+            deadlineType2.setDescription(" Details about Space Allocation Deadline");
             deadlineType2.setType(DeadlineTypeEnum.SPACEALLOCATION);
             deadlineTypeRepository.save(deadlineType2);
+
             DeadlineType deadlineType3 = new DeadlineType();
             deadlineType3.setName("Assign Targets");
+            deadlineType3.setDescription(" Details about Assigning Target Deadline");
             deadlineType3.setType(DeadlineTypeEnum.ASSIGNTARGETS);
             deadlineTypeRepository.save(deadlineType3);
+
+            DeadlineType deadlineType4 = new DeadlineType();
+            deadlineType4.setName("Other Deadline");
+            deadlineType4.setDescription(" Details about Other Deadline");
+            deadlineType4.setType(DeadlineTypeEnum.OTHER);
+            deadlineTypeRepository.save(deadlineType4);
 
 
         }

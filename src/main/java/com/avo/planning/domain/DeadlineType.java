@@ -29,6 +29,10 @@ public class DeadlineType implements Serializable {
     private String name;
 
     @NotNull
+    @Field("description")
+    private String description;
+
+    @NotNull
     @Field("type")
     private DeadlineTypeEnum type;
 
@@ -67,6 +71,13 @@ public class DeadlineType implements Serializable {
         this.type = type;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public boolean equals(Object o) {

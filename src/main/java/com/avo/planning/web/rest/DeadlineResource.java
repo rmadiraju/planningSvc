@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -93,11 +94,13 @@ public class DeadlineResource {
 
     @GetMapping("/getDeadlineTypes")
     @Timed
-    public ResponseEntity<List<String>> getDeadlineTypes(Pageable pageable) {
+    public ResponseEntity<List<DeadlineType>> getDeadlineTypes(Pageable pageable) {
         log.debug("REST request to get Deadline Types ");
         Page<DeadlineType> page = deadlineTypeService.findAll(pageable);
-        List<String> ddlList =  page.getContent().stream().map(deadlineType -> deadlineType.getName()).collect(Collectors.toList());
-        return ResponseEntity.ok().body(ddlList);
+        //Map<String, String> ddlList =  page.getContent().stream().map(deadlineType -> deadlineType.getName()).collect(Collectors.toList());
+        //Map<String, String> ddlList =  page.getContent().stream().collect(Collectors.toMap(DeadlineType::getName, DeadlineType::getDescription));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/getDeadlineTypes");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
 
     }
 
