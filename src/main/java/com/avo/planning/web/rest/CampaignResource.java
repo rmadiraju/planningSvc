@@ -25,6 +25,7 @@ import java.util.Optional;
 /**
  * REST controller for managing Campaign.
  */
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 public class CampaignResource {
@@ -150,4 +151,11 @@ public class CampaignResource {
         return ResponseUtil.wrapOrNotFound(campaign);
     }
 
+    @GetMapping("/campaigns/getCampaignTemplates")
+    @Timed
+    public ResponseEntity<List<Campaign>> getCampaignTemplates() {
+        log.debug("REST request to get CampaignTemplates : {}");
+        List<Campaign> campaigns = campaignService.getCampaignTemplates();
+        return ResponseEntity.ok().body(campaigns);
+    }
 }

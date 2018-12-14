@@ -56,4 +56,6 @@ public interface CampaignService {
 
     Optional<Campaign> findByName(String name) ;
 
+    List<Campaign> getCampaignTemplates();
+
 }

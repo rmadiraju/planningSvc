@@ -172,6 +172,7 @@ public class DevStartup extends BaseStartup {
                     campaign.setActive(true);
                     campaign.setTemplate(false);
                     campaignList.add(campaign);
+                    campaign.setTemplate(j == 1 ? true: false);
                     log.info("Adding test Instruments for Campaign {} ", j);
                     List<Instrument> instrumentList = new ArrayList<>();
                     for (int k = 0; k < 2; k++){

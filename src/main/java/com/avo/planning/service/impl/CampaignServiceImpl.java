@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Campaign.
@@ -110,4 +111,9 @@ public class CampaignServiceImpl extends AbstractServiceImpl implements Campaign
         return campaignRepository.findByName(name);
     }
 
+    @Override
+    public List<Campaign> getCampaignTemplates() {
+        return campaignRepository.findAll().stream().filter(campaign -> campaign.getTemplate()).collect(Collectors.toList());
+
+    }
 }
