@@ -19,7 +19,7 @@ import java.util.Optional;
 public class InstrumentTypeServiceImpl implements InstrumentTypeService {
 
 
-    private final Logger log = LoggerFactory.getLogger(InstrumentServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(InstrumentTypeServiceImpl.class);
 
     private final InstrumentTypeRepository instrumentTypeRepository;
 

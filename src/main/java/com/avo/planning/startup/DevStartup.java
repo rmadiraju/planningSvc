@@ -1,10 +1,7 @@
 package com.avo.planning.startup;
 
 import com.avo.planning.domain.*;
-import com.avo.planning.domain.enumeration.CalendarScopeEnum;
-import com.avo.planning.domain.enumeration.CampaignTypeEnum;
-import com.avo.planning.domain.enumeration.DeadlineTypeEnum;
-import com.avo.planning.domain.enumeration.InstrumentTypeEnum;
+import com.avo.planning.domain.enumeration.*;
 import com.avo.planning.repository.CalendarRepository;
 import com.avo.planning.repository.CalendarTypeRepository;
 import com.avo.planning.util.HTMLUtils;
@@ -52,6 +49,9 @@ public class DevStartup extends BaseStartup {
 
         deadlineRepository.deleteAll();
         deadlineRepository.deleteAll();
+
+        pageRepository.deleteAll();
+        pageTypeRepository.deleteAll();
 
 
     }
@@ -138,6 +138,28 @@ public class DevStartup extends BaseStartup {
 
         }
 
+        if (pageTypeRepository.findAll().isEmpty()){
+            PageType pageType = new PageType();
+            pageType.setName("Front Page");
+            pageType.setType(PageTypeEnum.FRONT);
+            pageTypeRepository.save(pageType);
+
+            PageType pageType2 = new PageType();
+            pageType2.setName("Back Page");
+            pageType2.setType(PageTypeEnum.BACK);
+            pageTypeRepository.save(pageType2);
+
+            PageType pageType3 = new PageType();
+            pageType3.setName("Front Page");
+            pageType3.setType(PageTypeEnum.FLAP);
+            pageTypeRepository.save(pageType3);
+
+            PageType pageType4 = new PageType();
+            pageType4.setName("Front Page");
+            pageType4.setType(PageTypeEnum.INSIDE);
+            pageTypeRepository.save(pageType4);
+
+        }
         CalendarType calendarType = calendarTypeRepository.findAll().get(0);
 
         if (calendarRepository.findAll().isEmpty()) {

@@ -47,7 +47,11 @@ public abstract class BaseStartup {
     @Autowired
     protected DeadlineTypeRepository deadlineTypeRepository;
 
+    @Autowired
+    protected  PageTypeRepository pageTypeRepository;
 
+    @Autowired
+    protected PageRepository pageRepository;
 
     public BaseStartup() {
         log.info("Running base startup tasks...");
