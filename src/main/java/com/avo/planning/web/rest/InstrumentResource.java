@@ -139,7 +139,6 @@ public class InstrumentResource {
         Page<InstrumentType> page = instrumentTypeService.findAll(pageable);
         List<String> instList =  page.getContent().stream().map(instrumentType -> instrumentType.getName()).collect(Collectors.toList());
         return ResponseEntity.ok().body(instList);
-
     }
 
     @GetMapping("/getInstrumentsTypesWithDetail")

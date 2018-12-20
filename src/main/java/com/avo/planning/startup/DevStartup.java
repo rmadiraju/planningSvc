@@ -164,21 +164,20 @@ public class DevStartup extends BaseStartup {
 
         if (calendarRepository.findAll().isEmpty()) {
             log.info("Adding test calendars");
-            List<Calendar> calendarList = new ArrayList();
             for (int i = 0; i < 21; i++) {
                 Calendar calendar = new Calendar();
                 calendar.setName("Calendar " + i);
                 calendar.setCreateDate(LocalDate.now());
                 calendar.setDescription("Cal" + i);
                 calendar.setColour(HTMLUtils.getRandomHexColour());
-                calendar.setIcon("testIcon");
+                calendar.setIcon("fas fa-heart");
                 calendar.setActive(true);
                 calendar.setCalendarType(calendarType);
                 if ( i % 5 == 0 ) {
                     calendar.setStartDate(LocalDate.now());
                     calendar.setEndDate(LocalDate.now().plus(10 + i, ChronoUnit.DAYS));
                 }
-                calendarList.add(calendar);
+                calendar = calendarRepository.save(calendar);
                 List<Campaign> campaignList = new ArrayList<>();
                 log.info("Adding test Campaigns for Calendar {}", i);
                 for (int j=0; j < 3; j++){
@@ -188,7 +187,7 @@ public class DevStartup extends BaseStartup {
                     campaign.setActive(true);
                     campaign.setDescription("Test Campaign "+j);
                     campaign.setCreateDate(LocalDate.now());
-                    campaign.setCalendar(calendar.getName());
+                    campaign.setCalendar(calendar);
                     campaign.setStartDate(LocalDate.now().plusDays(10));
                     campaign.setEndDate(campaign.getStartDate().plusDays(7));
                     campaign.setActive(true);
@@ -214,7 +213,6 @@ public class DevStartup extends BaseStartup {
                 campaignRepository.saveAll(campaignList);
 
             }
-            calendarRepository.saveAll(calendarList);
         }
 
         log.info("Test data info\n=====================\nCalendarTypes: {}\nCalendars: {}\n",calendarTypeRepository.count(),calendarRepository.count());

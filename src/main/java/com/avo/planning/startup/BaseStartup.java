@@ -19,9 +19,9 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public abstract class BaseStartup {
+    public abstract class BaseStartup {
 
-    private static final Logger log = LoggerFactory.getLogger(BaseStartup.class);
+        private static final Logger log = LoggerFactory.getLogger(BaseStartup.class);
 
     @Autowired
     protected CalendarRepository calendarRepository;

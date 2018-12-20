@@ -22,6 +22,7 @@ import java.util.Set;
  * A Campaign.
  */
 @Document(collection = "campaign")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Campaign implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,18 +41,18 @@ public class Campaign implements Serializable {
     @Field("recurring")
     private Boolean recurring;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     @Field("start_date")
     private LocalDate startDate;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     @Field("end_date")
     private LocalDate endDate;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     @Field("create_date")
     private LocalDate createDate;
 
@@ -83,9 +84,9 @@ public class Campaign implements Serializable {
     private CampaignType campaignType;
 
 
+    @DBRef
     @Field("calendar")
-    @JsonIgnoreProperties("campaigns")
-    private String calendar;
+    private Calendar calendar;
 
 
 
@@ -254,11 +255,11 @@ public class Campaign implements Serializable {
         this.campaignType = campaignType;
     }
 
-    public String getCalendar() {
+    public Calendar getCalendar() {
         return calendar;
     }
 
-    public Campaign calendar(String calendar) {
+    public Campaign calendar(Calendar calendar) {
         this.calendar = calendar;
         return this;
     }
@@ -268,6 +269,7 @@ public class Campaign implements Serializable {
     }
 
     public void setActive(Boolean active) {
+
         isActive = active;
     }
 
@@ -276,12 +278,15 @@ public class Campaign implements Serializable {
     }
 
     public void setTemplate(Boolean template) {
+
         isTemplate = template;
     }
 
-    public void setCalendar(String calendar) {
+    public void setCalendar(Calendar calendar) {
         this.calendar = calendar;
     }
+
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
