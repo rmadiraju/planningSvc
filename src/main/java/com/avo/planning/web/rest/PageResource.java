@@ -130,7 +130,7 @@ public class PageResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
 
-    @GetMapping("/getPagesTypes")
+    @GetMapping("/getPageTypes")
     @Timed
     public ResponseEntity<List<String>> getPageTypes(Pageable pageable) {
         log.debug("REST request to get Page Types ");
@@ -140,7 +140,7 @@ public class PageResource {
 
     }
 
-    @GetMapping("/getPagesTypesWithDetail")
+    @GetMapping("/getPageTypesWithDetail")
     @Timed
     public ResponseEntity<List<PageType>> getPagesTypesWithDetail(Pageable pageable) {
         log.debug("REST request to get Page Types ");
