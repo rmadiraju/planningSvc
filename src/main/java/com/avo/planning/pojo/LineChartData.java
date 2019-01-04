@@ -11,8 +11,9 @@ package com.avo.planning.pojo;
 
 public class LineChartData extends ChartData {
 
-    private String pointBorderColor= "#2c2c2c";
-    private String pointBackgroundColor = "#2c2c2c";
+    private String pointBorderColor= "#FFFFFF";
+    private String borderColor= "#FFFFFF";
+    private String pointBackgroundColor = "#FFFFFF";
     private String pointHoverBackgroundColor = "#FFFFCC";
     private String pointHoverBorderColor = "#FFFFCC";
     private int pointBorderWidth = 1;
@@ -89,5 +90,13 @@ public class LineChartData extends ChartData {
 
     public void setPointRadius(int pointRadius) {
         this.pointRadius = pointRadius;
+    }
+
+    public String getBorderColor() {
+        return borderColor;
+    }
+
+    public void setBorderColor(String borderColor) {
+        this.borderColor = borderColor;
     }
 }

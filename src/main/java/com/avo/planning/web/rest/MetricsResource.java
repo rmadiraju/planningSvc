@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import static com.avo.planning.util.HTMLUtils.getRandomHexColour;
+
 @RestController
 @RequestMapping("/api/metrics")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -52,8 +54,10 @@ public class MetricsResource {
 
         for (int i = 1; i <= 5; i++) {
             LineChartData d = new LineChartData("I" + i);
-            d.setPointBackgroundColor(HTMLUtils.getRandomHexColour());
-
+            final String randomHexColour = getRandomHexColour();
+            d.setPointBackgroundColor(randomHexColour);
+            d.setBorderColor(randomHexColour);
+            d.setPointHoverBackgroundColor(randomHexColour);
             for (int x = 0; x < 12; x++) {
                 d.getData().add(new Double(random.nextInt(max - min + 1) + min));
             }
