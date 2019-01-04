@@ -143,7 +143,7 @@ public class CampaignResource {
         return "Done";
     }
 
-    @GetMapping("/campaigns/{name}")
+    @GetMapping("/campaigns/name/{name}")
     @Timed
     public ResponseEntity<Campaign> getCampaignByName(@PathVariable String name) {
         log.debug("REST request to get Campaign By Name : {}", name);

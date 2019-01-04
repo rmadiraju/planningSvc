@@ -16,6 +16,13 @@ public final class HeaderUtil {
     private HeaderUtil() {
     }
 
+    public static HttpHeaders createChartHeaders(String message, String param) {
+        HttpHeaders headers = new HttpHeaders();
+
+        return headers;
+    }
+
+
     public static HttpHeaders createAlert(String message, String param) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-" + APPLICATION_NAME + "-alert", message);
