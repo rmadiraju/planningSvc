@@ -22,7 +22,7 @@ public class ChartDataSeries {
     public ChartDataSeries() {
     }
 
-    @JsonProperty("dataset")
+    @JsonProperty("datasets")
     public List<ChartData> getDataSets() {
         return dataSets;
     }

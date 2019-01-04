@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class ChartData implements Serializable {
 
     private String label;
-    private boolean fill = true;
+    private boolean fill = false;
     private String backgroundColor  = "#FFFFCC";
     private List<Double> data = new ArrayList<>();
 
@@ -59,4 +59,7 @@ public abstract class ChartData implements Serializable {
     public void setData(List<Double> data) {
         this.data = data;
     }
+
+
+
 }

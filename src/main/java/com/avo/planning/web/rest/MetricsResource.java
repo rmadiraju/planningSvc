@@ -3,6 +3,7 @@ package com.avo.planning.web.rest;
 import com.avo.planning.pojo.ChartData;
 import com.avo.planning.pojo.ChartDataSeries;
 import com.avo.planning.pojo.LineChartData;
+import com.avo.planning.util.HTMLUtils;
 import com.avo.planning.web.rest.util.HeaderUtil;
 import com.codahale.metrics.annotation.Timed;
 import org.slf4j.Logger;
@@ -43,7 +44,7 @@ public class MetricsResource {
         LocalDate now = LocalDate.now();
 
         for (int x = 0; x < 12; x++) {
-            Month currentMonth =  now.getMonth();
+            Month currentMonth = now.getMonth();
             responseData.getLabels().add(currentMonth.getDisplayName(TextStyle.SHORT, Locale.getDefault()));
             now = now.plusMonths(1l);
         }
@@ -51,7 +52,9 @@ public class MetricsResource {
 
         for (int i = 1; i <= 5; i++) {
             LineChartData d = new LineChartData("I" + i);
-                      for (int x = 0; x < 12; x++) {
+            d.setPointBackgroundColor(HTMLUtils.getRandomHexColour());
+
+            for (int x = 0; x < 12; x++) {
                 d.getData().add(new Double(random.nextInt(max - min + 1) + min));
             }
             data.add(d);
