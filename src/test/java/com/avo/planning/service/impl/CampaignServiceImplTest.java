@@ -8,18 +8,21 @@ import com.avo.planning.web.rest.CampaignResource;
 import com.avo.planning.web.rest.LogsResource;
 import com.avo.planning.web.rest.TestUtil;
 import com.avo.planning.web.rest.errors.ExceptionTranslator;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.*;
 
-import org.junit.Test;
+import org.junit.rules.Stopwatch;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.test.annotation.Timed;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -27,7 +30,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,6 +63,9 @@ public class CampaignServiceImplTest {
 
     private static final LocalDate DEFAULT_END_DATE = DEFAULT_START_DATE.plusDays(5);
     private static final LocalDate UPDATED_END_DATE = DEFAULT_END_DATE.plusDays(5);
+
+    private static final Logger logger = LoggerFactory.getLogger(CampaignServiceImplTest.class);
+
 
     private Campaign campaign;
 
@@ -124,6 +132,84 @@ public class CampaignServiceImplTest {
         List<Campaign> campaignList = campaignRepository.findAll();
         assertThat(campaignList).hasSize(databaseSizeBeforeUpdate);
 
+    }
+
+    class CreateCampaignTask implements Callable<String> {
+
+        private Campaign _campaign = createEntity();
+
+        public CreateCampaignTask(String name) {
+            this._campaign.setName(name);
+        }
+
+        @Override
+        public String call() throws Exception {
+            campaignService.save(_campaign);
+            return _campaign.getId();
+        }
+    }
+
+    private static void logInfo(Description description, String status, long nanos) {
+        String testName = description.getMethodName();
+        logger.info(String.format("Test %s %s, spent %d microseconds",
+            testName, status, TimeUnit.NANOSECONDS.toMicros(nanos)));
+    }
+
+
+    @Rule
+    public Stopwatch stopwatch = new Stopwatch() {
+        @Override
+        protected void succeeded(long nanos, Description description) {
+            logInfo(description, "succeeded", nanos);
+        }
+
+        @Override
+        protected void failed(long nanos, Throwable e, Description description) {
+            logInfo(description, "failed", nanos);
+        }
+
+        @Override
+        protected void skipped(long nanos, AssumptionViolatedException e, Description description) {
+            logInfo(description, "skipped", nanos);
+        }
+
+        @Override
+        protected void finished(long nanos, Description description) {
+            logInfo(description, "finished", nanos);
+        }
+    };
+
+    @Test
+    public void create1000CampaignsThreaded() throws Exception {
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+//            new ThreadPoolExecutor(13, 15, 500L, TimeUnit.MILLISECONDS,
+//                new LinkedBlockingQueue<Runnable>());
+
+        List<Future<String>> resultList = new ArrayList<>();
+
+        for ( int i = 0 ; i <= 1000; i++ ) {
+            Future<String> result = executorService.submit(new CreateCampaignTask("test" + i));
+            resultList.add(result);
+        }
+
+        int x = 0;
+        for ( Future<String> f : resultList) {
+            try {
+                String res  = f.get();
+                System.out.println(x++ + ":" + res + "\n");
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+
+        }
+        executorService.shutdown();
+        try {
+            if (!executorService.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+                executorService.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executorService.shutdownNow();
+        }
     }
 
     @Test
