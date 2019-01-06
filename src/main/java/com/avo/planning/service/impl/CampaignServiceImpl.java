@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -115,5 +116,11 @@ public class CampaignServiceImpl extends AbstractServiceImpl implements Campaign
     public List<Campaign> getCampaignTemplates() {
         return campaignRepository.findAll().stream().filter(campaign -> campaign.getTemplate()).collect(Collectors.toList());
 
+    }
+
+
+    @Override
+    public Optional<Campaign> findByPeriod(Date startDate, Date endDate) {
+        return campaignRepository.findByStartDateAndEndDate(startDate, endDate);
     }
 }

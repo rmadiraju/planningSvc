@@ -121,6 +121,16 @@ public class Campaign implements Serializable {
         return this;
     }
 
+    public Campaign template(Boolean isTemplate) {
+        this.isTemplate = isTemplate;
+        return this;
+    }
+
+    public Campaign active(Boolean isActive) {
+        this.isActive = isActive;
+        return this;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

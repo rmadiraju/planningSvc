@@ -5,6 +5,7 @@ import com.avo.planning.domain.CalendarType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public interface CalendarService {
     /**
      * Get all the calendars.
      *
-     * @param CalendarType the CalendarType
+     * @param calendarType the CalendarType
      * @return the list of entities
      */
     List<Calendar> findByCalendarType(CalendarType calendarType);
@@ -60,7 +61,5 @@ public interface CalendarService {
     List<Calendar> getCalendarWithCascadingObjects() ;
 
 
-
-
-
+    List<Calendar> findActiveForPeriod(Date startDate, Date endDate);
 }

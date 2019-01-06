@@ -4,6 +4,7 @@ import com.avo.planning.domain.Calendar;
 import com.avo.planning.domain.CalendarType;
 import com.avo.planning.repository.AttributeRepository;
 import com.avo.planning.repository.CalendarRepository;
+import com.avo.planning.repository.CampaignRepository;
 import com.avo.planning.service.CalendarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +30,7 @@ public class CalendarServiceImpl extends AbstractServiceImpl implements Calendar
 
 
     public CalendarServiceImpl(CalendarRepository calendarRepository) {
+
         this.calendarRepository = calendarRepository;
     }
 
@@ -137,6 +140,10 @@ public class CalendarServiceImpl extends AbstractServiceImpl implements Calendar
 
     }
 
-
-
+    @Override
+    public List<Calendar> findActiveForPeriod(Date startDate, Date endDate) {
+        // find all campaigns within period
+        campaignService.findByPeriod(startDate, endDate);
+        return null;
+    }
 }

@@ -17,6 +17,7 @@ import java.util.Optional;
 public interface CalendarRepository extends MongoRepository<Calendar, String> {
     List<Calendar> findByCalendarType(CalendarType type);
     Optional<Calendar> findFirstByName(String name);
-
+    Optional<Calendar> findByActiveTrue();
+    Optional<Calendar> findByActiveFalse();
 
 }

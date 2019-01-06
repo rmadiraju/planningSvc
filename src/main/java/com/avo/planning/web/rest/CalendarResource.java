@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -160,10 +162,27 @@ public class CalendarResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id)).build();
     }
 
+
+    /**
+     * GET /calendars/active/start/end
+     * @param startDate yyyy-MM-dd format
+     * @param endDate yyyy-MM-dd format
+     * @return get all calendars who have an active campaign within the specified timeframe
+     */
+    @GetMapping("/calendars/active/{startDate}/{endDate}")
+    @Timed
+    public ResponseEntity<List<Calendar>> getActiveCalendarsForPeriod(@PathVariable  @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,@PathVariable  @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate  ) {
+        log.debug("REST request to get all getActiveCalendarsForPeriod by {} {} ", startDate, endDate);
+
+        List<Calendar> calendars = calendarService.findActiveForPeriod(startDate,endDate);
+        return ResponseEntity.ok().body(calendars);
+
+    }
+
     /**
      * GET  /calendars : get all the calendars.
      *
-     * @param pageable the pagination information
+     * @param type type of calendar
      * @return the ResponseEntity with status 200 (OK) and the list of calendars in body
      */
     @PostMapping("/calendars/{type}")

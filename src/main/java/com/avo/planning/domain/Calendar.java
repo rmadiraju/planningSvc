@@ -73,7 +73,7 @@ public class Calendar implements Serializable {
     @JsonIgnoreProperties("")
     private CalendarType calendarType;
 
-    // StandAlone Campign List, populated by Calendar service up on request
+    // StandAlone Campaign List, populated by Calendar service up on request
     private Set<Campaign> campaigns = null;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
